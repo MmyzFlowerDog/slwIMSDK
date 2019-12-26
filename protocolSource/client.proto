@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package client;
+
+enum Platform {
+	///客户端平台定义
+	IPHONE = 0;    ///安卓手机
+	IPAD = 1;      ///iOS手机
+	ANDROID = 2;     ///iPad平板
+}
+
+message HeadInfo {
+	////客户端协议的包头
+	uint32 seq = 1;
+	uint32 cmd = 2;
+}
+
+enum ClientProtocolId {
+	///客户端协议号
+	DEFAULT = 0;    ///无用
+    LOGIN = 0x0101;  ///登陆协议
+}
+
+message Login {
+	///主协议号 0x0101
+	uint32 uid = 1;
+	uint32 protoVersion = 2; ///协议版本号
+	uint32 forceUpdateVersion = 3; ///强更版本号
+	Platform platform = 4;  ///平台号
+	bytes clientId = 5;///设备唯一码
+	bytes loginToken = 6; ////登陆token
+	bytes clientVersion = 7; ////客户端版本号
+}
+
+message LoginRsp {
+	///登陆成功回包  0x0102
+	uint32 uid = 1;
+}
